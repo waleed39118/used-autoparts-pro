@@ -1,0 +1,53 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-warning text-dark">
+          <h3 class="mb-0">
+            <i class="fas fa-edit me-2"></i>Edit Profile
+          </h3>
+        </div>
+        <div class="card-body">
+          <%- include('../partials/flash') %>
+
+          <form action="/users/profile?_method=PUT" method="POST">
+            <div class="mb-3">
+              <label for="username" class="form-label">
+                <i class="fas fa-user me-2"></i>Username
+              </label>
+              <input type="text" name="user[username]" id="username" class="form-control" value="<%= user.username %>" required minlength="3" maxlength="30">
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">
+                <i class="fas fa-envelope me-2"></i>Email Address
+              </label>
+              <input type="email" name="user[email]" id="email" class="form-control" value="<%= user.email %>" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">
+                <i class="fas fa-lock me-2"></i>New Password
+              </label>
+              <input type="password" name="user[password]" id="password" class="form-control" placeholder="Leave empty to keep current password" minlength="6">
+              <div class="form-text">Only fill this if you want to change your password</div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-warning">
+                <i class="fas fa-save me-2"></i>Update Profile
+              </button>
+              <a href="/users/profile" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,128 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h2 class="mb-0">
+            <i class="fas fa-plus me-2"></i>Add New Spare Part
+          </h2>
+        </div>
+        <div class="card-body">
+          <%- include('../partials/flash') %>
+
+          <form action="/spare-parts" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="name" class="form-label">
+                <i class="fas fa-tag me-2"></i>Part Name *
+              </label>
+              <input type="text" name="sparePart[name]" id="name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">
+                <i class="fas fa-align-left me-2"></i>Description
+              </label>
+              <textarea name="sparePart[description]" id="description" rows="3" class="form-control" placeholder="Describe the spare part..."></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="partLocation" class="form-label">
+                <i class="fas fa-map-marker-alt me-2"></i>Part Location *
+              </label>
+              <select name="sparePart[partLocation]" id="partLocation" class="form-select" required>
+                <option value="">Select Part Location</option>
+                <% partLocations.forEach(location => { %>
+                  <option value="<%= location._id %>"><%= location.name %></option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="carType" class="form-label">
+                <i class="fas fa-car me-2"></i>Car Type *
+              </label>
+              <select name="sparePart[carType]" id="carType" class="form-select" required>
+                <option value="">Select Car Type</option>
+                <% carTypes.forEach(type => { %>
+                  <option value="<%= type._id %>"><%= type.name %></option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="carModel" class="form-label">
+                <i class="fas fa-car-side me-2"></i>Car Model *
+              </label>
+              <select name="sparePart[carModel]" id="carModel" class="form-select" required>
+                <option value="">First select a car type</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="price" class="form-label">
+                <i class="fas fa-dollar-sign me-2"></i>Price (BHD) *
+              </label>
+              <input type="number" name="sparePart[price]" id="price" class="form-control" min="0" step="0.01" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="image" class="form-label">
+                <i class="fas fa-image me-2"></i>Image
+              </label>
+              <input type="file" name="image" id="image" class="form-control" accept="image/*">
+              <div class="form-text">Upload an image of the spare part (optional)</div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i>Add Spare Part
+              </button>
+              <a href="/spare-parts" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('carType').addEventListener('change', async function () {
+  const typeId = this.value;
+  const modelSelect = document.getElementById('carModel');
+  
+  if (!typeId) {
+    modelSelect.innerHTML = '<option value="">First select a car type</option>';
+    return;
+  }
+
+  modelSelect.innerHTML = '<option value="">Loading models...</option>';
+
+  try {
+    const response = await fetch(`/api/car-models?typeId=${typeId}`);
+    const models = await response.json();
+
+    modelSelect.innerHTML = '';
+    
+    if (models.length === 0) {
+      modelSelect.innerHTML = '<option value="">No models found for this type</option>';
+    } else {
+      models.forEach(model => {
+        const option = document.createElement('option');
+        option.value = model._id;
+        option.textContent = model.name;
+        modelSelect.appendChild(option);
+      });
+    }
+  } catch (error) {
+    console.error('Error loading car models:', error);
+    modelSelect.innerHTML = '<option value="">Error loading models</option>';
+  }
+});
+</script>
+
+<%- include('../partials/footer') %>

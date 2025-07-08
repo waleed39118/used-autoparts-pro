@@ -1,0 +1,140 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-warning text-dark">
+          <h2 class="mb-0">
+            <i class="fas fa-edit me-2"></i>Edit Spare Part
+          </h2>
+        </div>
+        <div class="card-body">
+          <%- include('../partials/flash') %>
+
+          <form action="/spare-parts/<%= sparePart._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="name" class="form-label">
+                <i class="fas fa-tag me-2"></i>Part Name *
+              </label>
+              <input type="text" name="sparePart[name]" id="name" class="form-control" value="<%= sparePart.name %>" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">
+                <i class="fas fa-align-left me-2"></i>Description
+              </label>
+              <textarea name="sparePart[description]" id="description" rows="3" class="form-control"><%= sparePart.description || '' %></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="partLocation" class="form-label">
+                <i class="fas fa-map-marker-alt me-2"></i>Part Location *
+              </label>
+              <select name="sparePart[partLocation]" id="partLocation" class="form-select" required>
+                <% partLocations.forEach(loc => { %>
+                  <option value="<%= loc._id %>" <%= sparePart.partLocation._id.toString() === loc._id.toString() ? 'selected' : '' %>>
+                    <%= loc.name %>
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="carType" class="form-label">
+                <i class="fas fa-car me-2"></i>Car Type *
+              </label>
+              <select name="sparePart[carType]" id="carType" class="form-select" required>
+                <% carTypes.forEach(type => { %>
+                  <option value="<%= type._id %>" <%= sparePart.carType._id.toString() === type._id.toString() ? 'selected' : '' %>>
+                    <%= type.name %>
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="carModel" class="form-label">
+                <i class="fas fa-car-side me-2"></i>Car Model *
+              </label>
+              <select name="sparePart[carModel]" id="carModel" class="form-select" required>
+                <% carModels.forEach(model => { %>
+                  <option value="<%= model._id %>" <%= sparePart.carModel._id.toString() === model._id.toString() ? 'selected' : '' %>>
+                    <%= model.name %>
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="price" class="form-label">
+                <i class="fas fa-dollar-sign me-2"></i>Price (BHD) *
+              </label>
+              <input type="number" name="sparePart[price]" id="price" class="form-control" min="0" step="0.01" value="<%= sparePart.price %>" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">
+                <i class="fas fa-image me-2"></i>Image
+              </label>
+              <% if (sparePart.image) { %>
+                <div class="mb-2">
+                  <img src="<%= sparePart.image %>" alt="Current Image" class="img-thumbnail" style="max-width: 200px;">
+                  <p class="small text-muted">Current image</p>
+                </div>
+              <% } %>
+              <input type="file" name="image" class="form-control" accept="image/*">
+              <div class="form-text">Upload a new image to replace the current one (optional)</div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-warning">
+                <i class="fas fa-save me-2"></i>Update Spare Part
+              </button>
+              <a href="/spare-parts/<%= sparePart._id %>" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('carType').addEventListener('change', async function () {
+  const typeId = this.value;
+  const modelSelect = document.getElementById('carModel');
+  
+  if (!typeId) {
+    modelSelect.innerHTML = '<option value="">First select a car type</option>';
+    return;
+  }
+
+  modelSelect.innerHTML = '<option value="">Loading models...</option>';
+
+  try {
+    const response = await fetch(`/api/car-models?typeId=${typeId}`);
+    const models = await response.json();
+
+    modelSelect.innerHTML = '';
+    
+    if (models.length === 0) {
+      modelSelect.innerHTML = '<option value="">No models found for this type</option>';
+    } else {
+      models.forEach(model => {
+        const option = document.createElement('option');
+        option.value = model._id;
+        option.textContent = model.name;
+        modelSelect.appendChild(option);
+      });
+    }
+  } catch (error) {
+    console.error('Error loading car models:', error);
+    modelSelect.innerHTML = '<option value="">Error loading models</option>';
+  }
+});
+</script>
+
+<%- include('../partials/footer') %>

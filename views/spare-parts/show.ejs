@@ -1,0 +1,81 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <% if (sparePart.image) { %>
+        <img src="<%= sparePart.image %>" class="img-fluid rounded shadow" alt="<%= sparePart.name %>">
+      <% } else { %>
+        <div class="bg-light rounded shadow d-flex align-items-center justify-content-center" style="height: 400px;">
+          <i class="fas fa-image fa-5x text-muted"></i>
+        </div>
+      <% } %>
+    </div>
+    <div class="col-md-6">
+      <h1 class="mb-3"><%= sparePart.name %></h1>
+      
+      <% if (sparePart.description) { %>
+        <p class="text-muted mb-4"><%= sparePart.description %></p>
+      <% } %>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fas fa-info-circle me-2"></i>Part Details
+          </h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between">
+              <span><i class="fas fa-map-marker-alt me-2 text-primary"></i><strong>Location:</strong></span>
+              <span><%= sparePart.partLocation?.name %></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span><i class="fas fa-car me-2 text-info"></i><strong>Car Type:</strong></span>
+              <span><%= sparePart.carType?.name %></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span><i class="fas fa-tag me-2 text-warning"></i><strong>Car Model:</strong></span>
+              <span><%= sparePart.carModel?.name %></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span><i class="fas fa-dollar-sign me-2 text-success"></i><strong>Price:</strong></span>
+              <span class="text-success fw-bold"><%= sparePart.price.toFixed(2) %> BHD</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fas fa-user me-2"></i>Seller Information
+          </h5>
+          <p class="mb-2">
+            <strong>Posted by:</strong> <%= sparePart.owner?.username %>
+          </p>
+          <p class="mb-0">
+            <strong>Date:</strong> <%= sparePart.createdAt.toLocaleDateString() %>
+          </p>
+        </div>
+      </div>
+
+      <div class="d-grid gap-2">
+        <% if (currentUser && sparePart.owner._id.toString() === currentUser._id.toString()) { %>
+          <a href="/spare-parts/<%= sparePart._id %>/edit" class="btn btn-warning">
+            <i class="fas fa-edit me-2"></i>Edit This Part
+          </a>
+          <form action="/spare-parts/<%= sparePart._id %>?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-danger w-100" onclick="return confirm('Are you sure you want to delete this part?')">
+              <i class="fas fa-trash me-2"></i>Delete This Part
+            </button>
+          </form>
+        <% } %>
+        
+        <a href="/spare-parts" class="btn btn-outline-secondary">
+          <i class="fas fa-arrow-left me-2"></i>Back to All Parts
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

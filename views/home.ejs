@@ -1,0 +1,110 @@
+<%- include('partials/header') %>
+
+<div class="hero-section text-center py-5 mb-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+  <div class="container">
+    <h1 class="display-4 fw-bold mb-3">
+      <i class="fas fa-wrench me-3"></i>
+      Welcome to AutoParts Pro
+    </h1>
+    <p class="lead mb-4">
+      Your professional automotive parts marketplace - designed for quality and reliability
+    </p>
+
+    <% if (!currentUser) { %>
+      <a href="/auth/register" class="btn btn-lg btn-success me-3">
+        <i class="fas fa-user-plus me-2"></i>Get Started
+      </a>
+      <a href="/auth/login" class="btn btn-lg btn-outline-light">
+        <i class="fas fa-sign-in-alt me-2"></i>Login
+      </a>
+    <% } else { %>
+      <a href="/spare-parts/new" class="btn btn-lg btn-success me-3">
+        <i class="fas fa-plus me-2"></i>Add New Part
+      </a>
+      <a href="/spare-parts" class="btn btn-lg btn-outline-light">
+        <i class="fas fa-search me-2"></i>Browse Parts
+      </a>
+    <% } %>
+  </div>
+</div>
+
+<!-- Features Section -->
+<div class="container mb-5">
+  <div class="row text-center">
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <i class="fas fa-search fa-3x text-primary mb-3"></i>
+          <h5 class="card-title">Easy Search</h5>
+          <p class="card-text">Find spare parts by car type, model, and location with our advanced search system.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <i class="fas fa-shield-alt fa-3x text-success mb-3"></i>
+          <h5 class="card-title">Secure Trading</h5>
+          <p class="card-text">Buy and sell with confidence using our secure platform with user verification.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <i class="fas fa-users fa-3x text-info mb-3"></i>
+          <h5 class="card-title">Community</h5>
+          <p class="card-text">Join a growing community of car enthusiasts and spare parts dealers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Parts Section -->
+<% if (recentParts && recentParts.length > 0) { %>
+<div class="container mb-5">
+  <h2 class="text-center mb-4">
+    <i class="fas fa-clock me-2"></i>Recently Added Parts
+  </h2>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <% recentParts.forEach(part => { %>
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <% if (part.image) { %>
+            <img src="<%= part.image %>" class="card-img-top" alt="<%= part.name %>" style="height: 200px; object-fit: cover;">
+          <% } else { %>
+            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+              <i class="fas fa-image fa-3x text-muted"></i>
+            </div>
+          <% } %>
+          <div class="card-body">
+            <h5 class="card-title"><%= part.name %></h5>
+            <p class="card-text text-muted small"><%= part.description %></p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="badge bg-primary"><%= part.carType?.name %></span>
+              <strong class="text-success"><%= part.price.toFixed(2) %> BHD</strong>
+            </div>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">
+              <i class="fas fa-user me-1"></i><%= part.owner?.username %>
+            </small>
+            <a href="/spare-parts/<%= part._id %>" class="btn btn-sm btn-outline-primary float-end">
+              View Details
+            </a>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+  
+  <div class="text-center mt-4">
+    <a href="/spare-parts" class="btn btn-primary">
+      <i class="fas fa-arrow-right me-2"></i>View All Parts
+    </a>
+  </div>
+</div>
+<% } %>
+
+<%- include('partials/footer') %>

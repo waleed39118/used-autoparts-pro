@@ -1,0 +1,65 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">
+            <i class="fas fa-user me-2"></i>My Profile
+          </h3>
+        </div>
+        <div class="card-body">
+          <%- include('../partials/flash') %>
+
+          <div class="row">
+            <div class="col-md-4 text-center">
+              <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 120px; height: 120px;">
+                <i class="fas fa-user fa-4x text-muted"></i>
+              </div>
+              <h4><%= user.username %></h4>
+              <span class="badge bg-<%= user.role === 'admin' ? 'warning' : 'secondary' %>">
+                <i class="fas fa-<%= user.role === 'admin' ? 'crown' : 'user' %> me-1"></i>
+                <%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <h5>Account Information</h5>
+              <table class="table table-borderless">
+                <tr>
+                  <th width="30%">
+                    <i class="fas fa-user me-2 text-primary"></i>Username:
+                  </th>
+                  <td><%= user.username %></td>
+                </tr>
+                <tr>
+                  <th>
+                    <i class="fas fa-envelope me-2 text-primary"></i>Email:
+                  </th>
+                  <td><%= user.email %></td>
+                </tr>
+                <tr>
+                  <th>
+                    <i class="fas fa-calendar me-2 text-primary"></i>Member Since:
+                  </th>
+                  <td><%= user.createdAt.toLocaleDateString() %></td>
+                </tr>
+              </table>
+
+              <div class="mt-4">
+                <a href="/users/profile/edit" class="btn btn-primary">
+                  <i class="fas fa-edit me-2"></i>Edit Profile
+                </a>
+                <a href="/spare-parts" class="btn btn-outline-secondary">
+                  <i class="fas fa-cogs me-2"></i>View Spare Parts
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

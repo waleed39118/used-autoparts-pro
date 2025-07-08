@@ -1,0 +1,83 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">
+      <i class="fas fa-cogs me-2"></i>All Spare Parts
+    </h1>
+    <% if (currentUser) { %>
+      <a href="/spare-parts/new" class="btn btn-success">
+        <i class="fas fa-plus me-2"></i>Add New Part
+      </a>
+    <% } %>
+  </div>
+
+  <%- include('../partials/flash') %>
+
+  <% if (spareParts.length === 0) { %>
+    <div class="alert alert-info text-center">
+      <i class="fas fa-info-circle me-2"></i>
+      No spare parts found. 
+      <% if (currentUser) { %>
+        <a href="/spare-parts/new" class="alert-link">Be the first to add one!</a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <% spareParts.forEach(part => { %>
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <% if (part.image) { %>
+              <img src="<%= part.image %>" class="card-img-top" alt="<%= part.name %>" style="height: 200px; object-fit: cover;">
+            <% } else { %>
+              <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                <i class="fas fa-image fa-3x text-muted"></i>
+              </div>
+            <% } %>
+            <div class="card-body">
+              <h5 class="card-title"><%= part.name %></h5>
+              <p class="card-text text-muted small"><%= part.description || 'No description available' %></p>
+              
+              <ul class="list-group list-group-flush small">
+                <li class="list-group-item px-0">
+                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                  <strong>Location:</strong> <%= part.partLocation?.name %>
+                </li>
+                <li class="list-group-item px-0">
+                  <i class="fas fa-car me-2 text-info"></i>
+                  <strong>Type:</strong> <%= part.carType?.name %>
+                </li>
+                <li class="list-group-item px-0">
+                  <i class="fas fa-tag me-2 text-warning"></i>
+                  <strong>Model:</strong> <%= part.carModel?.name %>
+                </li>
+                <li class="list-group-item px-0">
+                  <i class="fas fa-dollar-sign me-2 text-success"></i>
+                  <strong>Price:</strong> <%= part.price.toFixed(2) %> BHD
+                </li>
+              </ul>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+              <small class="text-muted">
+                <i class="fas fa-user me-1"></i>
+                <%= part.owner?.username %>
+              </small>
+              <div>
+                <a href="/spare-parts/<%= part._id %>" class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-eye me-1"></i>View
+                </a>
+                <% if (currentUser && part.owner._id.toString() === currentUser._id.toString()) { %>
+                  <a href="/spare-parts/<%= part._id %>/edit" class="btn btn-sm btn-outline-warning">
+                    <i class="fas fa-edit me-1"></i>Edit
+                  </a>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

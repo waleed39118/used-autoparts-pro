@@ -1,0 +1,25 @@
+
+<svg width="450" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="spareGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2980b9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect x="0" y="0" width="450" height="400" fill="white" stroke="#ddd" stroke-width="2" rx="10"/>
+  <rect x="0" y="0" width="450" height="40" fill="url(#spareGradient)" rx="10"/>
+  
+  <text x="225" y="25" text-anchor="middle" fill="white" font-family="Arial" font-size="18" font-weight="bold">🔧 Spare Parts (قطع الغيار)</text>
+  
+  <text x="20" y="70" fill="#e74c3c" font-family="Arial" font-size="14" font-weight="bold">🔑 _id: ObjectId (Primary Key)</text>
+  <text x="20" y="95" fill="#2c3e50" font-family="Arial" font-size="14">📝 name: String (required)</text>
+  <text x="20" y="120" fill="#2c3e50" font-family="Arial" font-size="14">📋 description: String (required)</text>
+  <text x="20" y="145" fill="#2c3e50" font-family="Arial" font-size="14">💰 price: Number (required)</text>
+  <text x="20" y="170" fill="#2c3e50" font-family="Arial" font-size="14">🖼️ image: String (optional)</text>
+  <text x="20" y="195" fill="#f39c12" font-family="Arial" font-size="14" font-weight="bold">🔗 partLocation: ObjectId → PartLocation</text>
+  <text x="20" y="220" fill="#f39c12" font-family="Arial" font-size="14" font-weight="bold">🔗 carType: ObjectId → CarType</text>
+  <text x="20" y="245" fill="#f39c12" font-family="Arial" font-size="14" font-weight="bold">🔗 carModel: ObjectId → CarModel</text>
+  <text x="20" y="270" fill="#f39c12" font-family="Arial" font-size="14" font-weight="bold">🔗 owner: ObjectId → User</text>
+  <text x="20" y="295" fill="#2c3e50" font-family="Arial" font-size="14">📅 createdAt: Date</text>
+</svg>
