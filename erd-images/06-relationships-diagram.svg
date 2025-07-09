@@ -1,69 +1,0 @@
-
-<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="relationshipGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#34495e;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  
-  <rect x="0" y="0" width="800" height="600" fill="#f8f9fa" stroke="#ddd" stroke-width="2" rx="10"/>
-  <rect x="0" y="0" width="800" height="50" fill="url(#relationshipGradient)" rx="10"/>
-  
-  <text x="400" y="30" text-anchor="middle" fill="white" font-family="Arial" font-size="24" font-weight="bold">🔗 العلاقات بين الجداول</text>
-  
-  <!-- Users Box -->
-  <rect x="50" y="100" width="150" height="80" fill="#e74c3c" stroke="#c0392b" stroke-width="2" rx="5"/>
-  <text x="125" y="125" text-anchor="middle" fill="white" font-family="Arial" font-size="14" font-weight="bold">Users</text>
-  <text x="125" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="12">المستخدمون</text>
-  
-  <!-- Spare Parts Box -->
-  <rect x="325" y="100" width="150" height="80" fill="#3498db" stroke="#2980b9" stroke-width="2" rx="5"/>
-  <text x="400" y="125" text-anchor="middle" fill="white" font-family="Arial" font-size="14" font-weight="bold">Spare Parts</text>
-  <text x="400" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="12">قطع الغيار</text>
-  
-  <!-- Car Types Box -->
-  <rect x="600" y="100" width="150" height="80" fill="#2ecc71" stroke="#27ae60" stroke-width="2" rx="5"/>
-  <text x="675" y="125" text-anchor="middle" fill="white" font-family="Arial" font-size="14" font-weight="bold">Car Types</text>
-  <text x="675" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="12">أنواع السيارات</text>
-  
-  <!-- Car Models Box -->
-  <rect x="600" y="250" width="150" height="80" fill="#f39c12" stroke="#e67e22" stroke-width="2" rx="5"/>
-  <text x="675" y="275" text-anchor="middle" fill="white" font-family="Arial" font-size="14" font-weight="bold">Car Models</text>
-  <text x="675" y="295" text-anchor="middle" fill="white" font-family="Arial" font-size="12">موديلات السيارات</text>
-  
-  <!-- Part Locations Box -->
-  <rect x="325" y="250" width="150" height="80" fill="#9b59b6" stroke="#8e44ad" stroke-width="2" rx="5"/>
-  <text x="400" y="275" text-anchor="middle" fill="white" font-family="Arial" font-size="14" font-weight="bold">Part Locations</text>
-  <text x="400" y="295" text-anchor="middle" fill="white" font-family="Arial" font-size="12">مواقع القطع</text>
-  
-  <!-- Relationship Lines -->
-  <line x1="200" y1="140" x2="325" y2="140" stroke="#2c3e50" stroke-width="3"/>
-  <text x="262" y="135" text-anchor="middle" fill="#2c3e50" font-family="Arial" font-size="12">1:N</text>
-  <text x="262" y="155" text-anchor="middle" fill="#7f8c8d" font-family="Arial" font-size="10">يملك</text>
-  
-  <line x1="475" y1="140" x2="600" y2="140" stroke="#2c3e50" stroke-width="3"/>
-  <text x="537" y="135" text-anchor="middle" fill="#2c3e50" font-family="Arial" font-size="12">N:1</text>
-  <text x="537" y="155" text-anchor="middle" fill="#7f8c8d" font-family="Arial" font-size="10">ينتمي لنوع</text>
-  
-  <line x1="400" y1="180" x2="400" y2="250" stroke="#2c3e50" stroke-width="3"/>
-  <text x="420" y="215" fill="#2c3e50" font-family="Arial" font-size="12">N:1</text>
-  <text x="420" y="230" fill="#7f8c8d" font-family="Arial" font-size="10">في موقع</text>
-  
-  <line x1="675" y1="180" x2="675" y2="250" stroke="#2c3e50" stroke-width="3"/>
-  <text x="690" y="215" fill="#2c3e50" font-family="Arial" font-size="12">1:N</text>
-  <text x="690" y="230" fill="#7f8c8d" font-family="Arial" font-size="10">له موديلات</text>
-  
-  <line x1="600" y1="290" x2="475" y2="140" stroke="#2c3e50" stroke-width="3"/>
-  <text x="537" y="200" fill="#2c3e50" font-family="Arial" font-size="12">N:1</text>
-  <text x="537" y="215" fill="#7f8c8d" font-family="Arial" font-size="10">لموديل</text>
-  
-  <!-- Legend -->
-  <rect x="50" y="450" width="700" height="120" fill="white" stroke="#ddd" stroke-width="1" rx="5"/>
-  <text x="400" y="475" text-anchor="middle" fill="#2c3e50" font-family="Arial" font-size="16" font-weight="bold">شرح العلاقات</text>
-  
-  <text x="70" y="500" fill="#2c3e50" font-family="Arial" font-size="14">• Users → Spare Parts: كل مستخدم يملك عدة قطع غيار</text>
-  <text x="70" y="520" fill="#2c3e50" font-family="Arial" font-size="14">• Car Types → Spare Parts: كل نوع سيارة له عدة قطع غيار</text>
-  <text x="70" y="540" fill="#2c3e50" font-family="Arial" font-size="14">• Car Types → Car Models: كل نوع سيارة له عدة موديلات</text>
-  <text x="70" y="560" fill="#2c3e50" font-family="Arial" font-size="14">• Part Locations → Spare Parts: كل موقع يحتوي على عدة قطع غيار</text>
-</svg>
